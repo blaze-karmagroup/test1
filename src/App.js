@@ -1,8 +1,8 @@
 import "./App.css";
-import Header from "./components/header";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages//dashboard/home";
 import Auth from "./pages/auth";
+import CreateEmployee from "./pages/create_employee/create_employee";
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/create-employee" element={<CreateEmployee />} />
       </Routes>
     </BrowserRouter>
   );

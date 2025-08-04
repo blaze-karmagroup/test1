@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import Header from "../components/header";
-import { Box, Button, Link, Paper, TextField, Typography } from "@mui/material";
-import theme from "../theme";
+import {
+  Box,
+  Button,
+  Link,
+  Paper,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const theme = useTheme();
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -63,7 +71,7 @@ const Auth = () => {
               color: theme.palette.text.primary,
             }}
           >
-            {isLogin ? 'Login' : 'Sign Up'}
+            {isLogin ? "Login" : "Sign Up"}
           </Typography>
           {isLogin ? (
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>

@@ -1,25 +1,49 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
   Container,
+  Drawer,
+  Icon,
   IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { LoginRounded } from "@mui/icons-material";
 
 function Header() {
   const pages = [
     "Dashboard",
-    "Apply Leave",
-    "My Leaves",
-    "Team Leaves",
+    "Interview Details",
+    "Profile",
+    "View Profile",
+    "Authorization",
+    "Transfer details",
+    "Bonus trip",
+    "Action",
+    "Resignation",
+    "Reports",
+    "Settings",
+    "Password change",
     "Logout",
   ];
+
+  const theme = useTheme();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isLoggedIn = true;
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#000000" }}>
@@ -28,19 +52,20 @@ function Header() {
           <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                my: 2, mr: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                my: 2,
+                mr: 2,
                 height: { xs: 30, sm: 40, md: 50 },
               }}
             >
               <img
                 alt="logo"
-                src="/images/logo.png" 
+                src="/images/logo.png"
                 style={{
                   maxWidth: "100%",
-                  maxHeight: "100%", 
+                  maxHeight: "100%",
                   objectFit: "contain",
                   borderRadius: "4px",
                 }}
@@ -69,47 +94,89 @@ function Header() {
             </Typography>
           </Box>
 
-          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
+            {isLoggedIn ? (
+              <Avatar
+                sx={{
+                  mx: 2,
+                  fontWeight: "bold",
+                  bgcolor: theme.palette.primary.main,
+                  color: "white",
+                }}
+              >
+                AD
+              </Avatar>
+            ) : (
+              <Icon sx={{ mx: 2 }}>
+                <LoginRounded />
+              </Icon>
+            )}
             <IconButton
               size="large"
               aria-label="open navigation menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              // onClick={handleOpenNavMenu}
-              color="inherit" // Inherits color from AppBar (white)
+              onClick={() => setIsDrawerOpen(true)}
+              color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              // anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right", // Anchor menu to the right of the button
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right", // Transform from top-right
-              }}
-              // open={Boolean(anchorElNav)}
-              // onClose={handleCloseNavMenu}
+            <Drawer
+              anchor="right"
+              open={isDrawerOpen}
+              onClose={() => setIsDrawerOpen(false)}
               sx={{
-                display: { xs: "block", md: "none" },
+                "& .MuiDrawer-paper": {
+                  backgroundColor: "#000000",
+                  color: "#FFFFFF",
+                },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  sx={{ borderRadius: "4px", margin: "4px" }}
-                >
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              <List sx={{ width: 280 }}>
+                <ListItem>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      my: 3,
+                      background: "transparent",
+                    }}
+                  >
+                    <img
+                      src="/images/logo.png"
+                      alt="Salon Logo"
+                      style={{
+                        maxHeight: "15vw",
+                        maxWidth: "100%",
+                        height: "auto",
+                      }}
+                    />
+                  </Box>
+                </ListItem>
+
+                {pages.map((page) => (
+                  <ListItem key={page}>
+                    <ListItemButton
+                      component={Link}
+                      to="/"
+                      onClick={() => setIsDrawerOpen(false)}
+                      sx={{
+                        "&:hover": { color: "text.primary", ml: 0.2 },
+                        padding: "0 8px",
+                      }}
+                    >
+                      <ListItemText primary={page} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </Drawer>
           </Box>
 
-          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+          {/* <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -126,7 +193,7 @@ function Header() {
                 {page}
               </Button>
             ))}
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>
